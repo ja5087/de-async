@@ -24,10 +24,7 @@ var Queue = function(maxProcesses, finishedcb) {
         if(typeof fn != 'function')
         {
             throw new Error("ERROR: fn not a function");
-        } else if(typeof cb != 'function')
-        {
-            throw new Error("ERROR: cb not a function");
-        }
+        } 
         q.push({fn:fn,cb:cb||null});
         
     }
