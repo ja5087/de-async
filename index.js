@@ -1,4 +1,4 @@
-var Queue = function(maxProcesses, finishedcb) {
+var Queue = function(maxProcesses, finalCallback) {
     var max = maxProcesses;
     var current = 0;
     var q = [];
@@ -13,7 +13,7 @@ var Queue = function(maxProcesses, finishedcb) {
 
     function begin()
     {   
-        while(current<max)
+        while(current < max)
         {
             callNext();
         }
@@ -23,16 +23,16 @@ var Queue = function(maxProcesses, finishedcb) {
     {
         if(typeof fn != 'function')
         {
-            throw new Error("ERROR: fn not a function");
+            throw new Error("Argument not a function");
         } 
-        q.push({fn:fn,cb:cb||null});
+        q.push({fn:fn, cb:cb || null});
         
     }
 
     function attempt()
     {
         
-        while(current<max&&q.length>0)
+        while(current<max && q.length>0)
         {
             callNext();
         }
@@ -41,7 +41,7 @@ var Queue = function(maxProcesses, finishedcb) {
     function finished(fncb)
     {
 
-        //pass any callbacks with same args
+        //call any callbacks with same args
         if(fncb)
         {
             //slice out 0 since it's the callback itself
@@ -53,12 +53,11 @@ var Queue = function(maxProcesses, finishedcb) {
         if(current==0 && q.length == 0)
         {
             
-            finishedcb();
+            finalCallback();
         }
         attempt();
     }
 
-    //call the next item
     function callNext()
     {
         var next = q.shift();
@@ -66,7 +65,7 @@ var Queue = function(maxProcesses, finishedcb) {
         {
             current++;
             
-            next.fn.call(null,finished.bind(null,next.cb));
+            next.fn.call(null, finished.bind(null, next.cb));
         }
     }
 }
