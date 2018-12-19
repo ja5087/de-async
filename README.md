@@ -53,8 +53,6 @@ Pushes a new task to the queue.
 Any callbacks that would be normally passed to this task must be passed in as the second argument. 
 de-async will automatically call that callback with copied arguments.
 
-Otherwise, the function is expected to call cb() at some point in time.
-
 Example:
 
 ~~~~
